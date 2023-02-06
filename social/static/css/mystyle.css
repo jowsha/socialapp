@@ -1,0 +1,66 @@
+.carheading{
+    width: 546px;
+    height: 50px;
+  }
+
+.conclr{
+    color: white;
+}
+.combox{
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    color: white;
+}
+.addbut{
+    color:white;
+    border-radius: 8px;
+    border-color: white;
+}
+.mytext{
+    margin-top: 10px;
+    font-size:small;
+}
+.myhead{
+    margin-top: -15px;
+}
+.mycom{
+    margin-top: -24px;
+    font-size:small;
+}
+.posbox{
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    color:white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.imge{
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    width: 205px;
+    color: white;
+}
+.post{
+    /* border: 2px; */
+    border-color: white;
+}
+.postfrm{
+    padding-left: 9px;
+    border-color:white;
+}
+.pro{
+    border-color:white;
+}
+.logindiv{
+    border: lightgray 1px;
+    background-color: rgb(93, 240, 230);
+    top: 20%;
+    left: 30%;
+    bottom: 20%;
+    display: block;
+    position: absolute;
+    background-size: 750px 417px;  
+}

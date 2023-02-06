@@ -1,0 +1,145 @@
+{%extends 'base.html'%}
+{%block body_block%}
+{%load static%}
+
+    <!-- Page header with logo and tagline-->
+    <!-- <header class="py-5 bg-light border-bottom mb-4">
+            
+        </header> -->
+    <!-- Page content-->
+    <div class="container-fluid bg-dark conclr">
+        <div class="row">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Welcome to Social App</h1>
+                <p class="lead mb-0"></p>
+            </div>
+            <!-- Blog entries-->
+            <div class="col-3">
+                <div class="container  mb-4  d-flex justify-content-center ">
+                    <div class="card p-4 bg-dark pro">
+                        <div class=" image d-flex flex-column justify-content-center align-items-center"> <button
+                                class="btn btn-secondary"> {%if userd.image%} <img src="{{userd.image.url}}" height="100"
+                                    width="100" />{%else%}<img src="../static/images/user.webp" height="100"
+                                    width="100" />{%endif%}</button> <span class="name mt-3">{{user.username}}</span> <span
+                                class="idd">{{user.first_name}} {{user.last_name}}</span>
+                            <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span
+                                    class="idd1">{{user.email}}</span> <span><i class="fa fa-copy"></i></span> </div>
+                            <div class="d-flex flex-row justify-content-center align-items-center mt-3"> <span
+                                    class="number">{%if usep%}{{usep}} {%else%}0{%endif%}<span class="follow">Posts</span></span> </div>
+                            <div class=" d-flex mt-2"> <a href="{%url 'profile'%}" class="btn btn-dark">View Profile</a> </div>
+                            <div class="text mt-3"> <span>{%if userd.about%}{{userd.about}}</span>{%else%}<span>Tell us about you..</span> {%endif%}</div>
+                            <div class=" px-2 rounded mt-4 date "> <span class="join">Joined {{user.date_joined}}</span> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <!-- Featured blog post-->
+                {%for post in posts%}
+                <div class="card mb-4 bg-dark post">
+                    <div class="carheading ms-3 mt-1"><h3>@{{post.user}}</h3></div>
+                    {%if post.image%}
+                    <a href="#!"><img class="card-img-top" src="{{post.image.url}}" alt="..." /></a>
+                    {%endif%}
+                    <div class="card-body">
+                        <a href="{%url 'upvote' post.id%}" ><i class="fa-solid fa-heart fa-2x" style="color:white;"></i></a>&emsp;{{post.up_vote.all.count}}&emsp;<button
+                            class="fa-solid fa-comment fa-2x bg-dark" style="border:none; color: white;" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseExample{{forloop.counter}}"
+                            aria-expanded="false" aria-controls="collapseExample"> </button>{{post.fetch_comments.all.count}}
+                        <h2 class="card-title mt-3">{{post.post}}</h2>
+                        <p class="card-text ms-3 ">{{post.decsription}}</p>
+                        <div class="small text-muted mb-2">{{post.created_date}}</div>
+                        <form action="{%url 'add-ans' post.id%}" method="post">
+                            {%csrf_token%}
+                            <input type="text" class="combox bg-dark" placeholder="Add a comment.." size=30
+                                name="comment">
+                            <button type="submit" class="addbut bg-dark">Add</button>
+                        </form>
+                        <div class="collapse" id="collapseExample{{forloop.counter}}">
+                            <p class="mt-2">all comments</p>
+                            <hr>
+                            <div class="card card-body bg-dark">
+                                {%for ans in post.fetch_comments%}
+                                <h5>@{{ans.user}}</h5>
+                                  &emsp;{{ans.comment}}
+                                <hr>
+                                {%endfor%}
+                            </div>
+                        </div>
+                        <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                                <a class="btn btn-primary" href="#!">Read more →</a> -->
+                    </div>
+                </div>
+                {%endfor%}
+                <!-- Nested row for non-featured blog posts-->
+
+                <!-- Pagination-->
+                <!-- <nav aria-label="Pagination">
+                    <hr class="my-0" />
+                    <ul class="pagination justify-content-center my-4">
+                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                                aria-disabled="true">Newer</a></li>
+                        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                    </ul>
+                </nav> -->
+            </div>
+            <div class="col-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="card bg-dark postfrm">
+                                <h4 class="text-center">Add a Post</h4>
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    {%csrf_token%}
+                                    {{form}}
+                                    <button type="submit" class="addbut bg-dark">Post</button>
+                                </form>
+                                <br>
+                            </div>
+                            <br>
+                            {%if use%}
+                            <h4 class="text-center">Your Post</h4>
+                            {%for post in use%}  
+                            {%if forloop.counter <= 2%}   
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top"
+                                        src="{{post.image.url}}" alt="..." /></a>
+                                <div class="card-body bg-dark">
+                                    <i class="fa-solid fa-heart" style="color:white;"></i>&nbsp;{{post.up_vote.all.count}}<button
+                                        class="fa-solid fa-comment bg-dark" style="border:none; color:white;"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}"
+                                        aria-expanded="false" aria-controls="collapseExample"> </button>
+                                    <h5 class="card-title mt-2">{{post.post}}</h5>
+                                    <p class="ms-3 mytext">{{post.decsription}}</p>
+                                    <div class="small text-muted mb-2">January 1, 2022</div>
+                                    <div class="collapse" id="collapse{{forloop.counter}}">
+                                        <p>Comments</p>
+                                        <div class="card card-body bg-dark">
+                                            {%for ans in post.fetch_comments%}
+                                            <p class="myhead">@{{ans.user}}</p>
+                                            <p class="mycom">{{ans.comment}}</p>
+                                            {%endfor%}
+                                        </div>
+                                    </div>
+                                    <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p> -->  
+                                </div>
+                            </div>
+                            
+                            {%endif%}
+                            {%endfor%}
+                            <a class="btn btn-primary ms-5" href="{%url 'profile'%}">Show more →</a>
+                            {%endif%}
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}
